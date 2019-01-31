@@ -22,13 +22,14 @@ from autokeras.constant import Constant
 from autokeras.pretrained.base import Pretrained
 from autokeras.utils import get_device, temp_path_generator, ensure_dir, download_file_from_google_drive
 
-"""VOC Dataset Classes
+# ---------------------------------
+# VOC Dataset Classes
 
-Original author: Francisco Massa
-https://github.com/fmassa/vision/blob/voc_dataset/torchvision/datasets/voc.py
+# Original author: Francisco Massa
+# https://github.com/fmassa/vision/blob/voc_dataset/torchvision/datasets/voc.py
 
-Updated by: Ellis Brown, Max deGroot
-"""
+# Updated by: Ellis Brown, Max deGroot
+# ---------------------------------
 
 # gets home dir cross platform
 HOME = os.path.expanduser("~")
@@ -186,7 +187,7 @@ class SSD(nn.Module):
         return output
 
     def load_weights(self, base_file):
-        other, ext = os.path.splitext(base_file)
+        _ , ext = os.path.splitext(base_file)
         if ext == '.pkl' or '.pth':
             print('Loading weights into state dict...')
             self.load_state_dict(torch.load(base_file,
@@ -436,7 +437,7 @@ def nms(boxes, scores, overlap=0.5, top_k=200):
     x2 = boxes[:, 2]
     y2 = boxes[:, 3]
     area = torch.mul(x2 - x1, y2 - y1)
-    v, idx = scores.sort(0)  # sort in ascending order
+    _ , idx = scores.sort(0)  # sort in ascending order
     # I = I[v >= 0.01]
     idx = idx[-top_k:]  # indices of the top-k largest vals
     xx1 = boxes.new()
@@ -538,7 +539,6 @@ class ObjectDetector(Pretrained):
 
     def predict(self, img_path, output_file_path=None):
         """
-        
         Returns:
             List of dictionaries. Each dictionary is like
             {"left": int, "top": int, "width": int, "height": int: "category": str, "confidence": float}
